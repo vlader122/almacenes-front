@@ -1,19 +1,14 @@
+<p-toast />
 <p-toolbar styleClass="mb-6">
     <ng-template #start>
-        <p-button label="New" icon="pi pi-plus" severity="secondary" class="mr-2" (click)="cargarDatos()" />
-        <p-button severity="secondary" label="Delete" icon="pi pi-trash" outlined />
-    </ng-template>
-
-    <ng-template #end>
-        <p-button label="Export" icon="pi pi-upload" severity="secondary" />
+        <p-button label="Nuevo" icon="pi pi-plus" severity="primary" class="mr-2" (click)="abrirModal()"/>
     </ng-template>
 </p-toolbar>
 
-<p-table #dt [rows]="10" [paginator]="true"
-    [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
-    [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
-    currentPageReportTemplate="Mostrando {first} de {last} de un total {totalRecords} personas" [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[10, 20, 30]">
+<p-table #dt [rows]="10" [paginator]="true" [value]="personales" [tableStyle]="{ 'min-width': '75rem' }"
+    [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Mostrando {first} de {last} de un total {totalRecords} personas"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 20, 30]">
     <ng-template #caption>
         <div class="flex items-center justify-between">
             <h5 class="m-0">Administrar Personal</h5>
@@ -25,13 +20,13 @@
     </ng-template>
     <ng-template #header>
         <tr>
-            <th style="min-width: 16rem">Nro</th>
-            <th pSortableColumn="name" style="min-width:16rem">
+            <th style="min-width: 5rem">Nro</th>
+            <th pSortableColumn="name" style="min-width:10rem">
                 Nombre
                 <p-sortIcon field="name" />
             </th>
             <th>Apellido</th>
-            <th pSortableColumn="price" style="min-width: 8rem">
+            <th pSortableColumn="price" style="min-width: 10rem">
                 Direccion
                 <p-sortIcon field="price" />
             </th>
@@ -46,21 +41,54 @@
             <th>Operaciones</th>
         </tr>
     </ng-template>
-    <ng-template #body let-product>
+    <ng-template #body let-personal>
         <tr>
-            <td style="min-width: 12rem">{{ product.code }}</td>
-            <td style="min-width: 16rem">{{ product.name }}</td>
+            <td>{{ personal.id }}</td>
+            <td>{{ personal.nombre }}</td>
+            <td>{{ personal.apellido }}</td>
+            <td>{{ personal.direccion }}</td>
+            <td>{{ personal.telefono}}</td>
+            <td>{{ personal.codigoPostal}}</td>
             <td>
-                <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
-                    [alt]="product.name" style="width: 64px" class="rounded" />
-            </td>
-            <td>{{ product.price }}</td>
-            <td>{{ product.category }}</td>
-            <td> </td>
-            <td>
-                <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" />
-                <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" />
+                <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" pTooltip="Editar" (click)="editar(personal)"/>
+                <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" pTooltip="Eliminar" (click)="eliminarDialog(personal.id)"/>
             </td>
         </tr>
     </ng-template>
 </p-table>
+
+<p-dialog [(visible)]="personalDialog" [style]="{ width: '450px' }" [header]="accion + ' personal'" [modal]="true">
+    <ng-template #content>
+        <form [formGroup] = "formulario">
+            <div class="flex ">
+                <div class="card flex flex-col gap-2">
+                    <p-iftalabel>
+                        <input pInputText formControlName="nombre">
+                        <label for="nombre">Nombre</label>
+                    </p-iftalabel>
+                    <p-iftalabel>
+                        <input pInputText formControlName="apellido">
+                        <label for="apellido">Apellido</label>
+                    </p-iftalabel>
+                    <p-iftalabel>
+                        <input pInputText formControlName="direccion">
+                        <label for="direccion">Direccion</label>
+                    </p-iftalabel>
+                    <p-iftalabel>
+                        <input pInputText formControlName="telefono">
+                        <label for="telefono">Telefono</label>
+                    </p-iftalabel>
+                    <p-iftalabel>
+                        <input pInputText formControlName="codigoPostal">
+                        <label for="codigoPostal">Codigo Postal</label>
+                    </p-iftalabel>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #footer>
+        <p-button label="Cancelar" icon="pi pi-times" (click)="cancelar()"/>
+        <p-button label="Guardar" icon="pi pi-check" (click)="guardar()" />
+    </ng-template>
+</p-dialog>
+<p-confirmdialog [style]="{ width: '450px' }" />
