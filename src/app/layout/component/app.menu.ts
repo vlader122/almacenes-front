@@ -25,6 +25,8 @@ export class AppMenu {
                 items: [
                     { label: 'Inicio', icon: 'pi pi-fw pi-home', routerLink: ['/']},
                     { label: 'Personal', icon: 'pi pi-fw pi-id-card', routerLink: ['/personal'] },
+                    { label: 'Categoria', icon: 'pi pi-fw pi-file-edit', routerLink: ['/categoria'] },
+                    { label: 'Item', icon: 'pi pi-fw pi-file-edit', routerLink: ['/item'] },
                 ]
             },
         ];

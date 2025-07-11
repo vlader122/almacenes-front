@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { AppLayout } from './app/layout/component/app.layout';
 import { Notfound } from './app/pages/notfound/notfound';
 import { PersonalComponent } from './app/pages/personal/personal.component';
+import { CategoriaComponent } from './app/pages/categoria/categoria.component';
+import { ItemComponent } from './app/pages/item/item.component';
 
 export const appRoutes: Routes = [
     {
@@ -9,7 +11,9 @@ export const appRoutes: Routes = [
         component: AppLayout,
         children: [
             { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') },
-            { path: 'personal', component: PersonalComponent }
+            { path: 'personal', component: PersonalComponent },
+            { path: 'categoria', component: CategoriaComponent },
+            { path: 'item', component: ItemComponent },
         ]
     },
     { path: 'notfound', component: Notfound },

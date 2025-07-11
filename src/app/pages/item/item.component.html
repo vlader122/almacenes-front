@@ -1,0 +1,97 @@
+<p-toast />
+<p-toolbar styleClass="mb-6">
+    <ng-template #start>
+        <p-button label="Nuevo" icon="pi pi-plus" severity="primary" class="mr-2" (click)="abrirModal()"/>
+    </ng-template>
+</p-toolbar>
+
+<p-table #dt [rows]="10" [paginator]="true" [value]="items" [tableStyle]="{ 'min-width': '75rem' }"
+    [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Mostrando {first} de {last} de un total {totalRecords} personas"
+    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 20, 30]">
+    <ng-template #caption>
+        <div class="flex items-center justify-between">
+            <h5 class="m-0">Administrar Item</h5>
+            <p-iconfield>
+                <p-inputicon styleClass="pi pi-search" />
+                <input pInputText type="text" placeholder="Search..." />
+            </p-iconfield>
+        </div>
+    </ng-template>
+    <ng-template #header>
+        <tr>
+            <th style="min-width: 5rem">Nro</th>
+            <th style="min-width:10rem">
+                Nombre
+                <p-sortIcon field="nombre" />
+            </th>
+            <th style="min-width:10rem">
+                Cantidad
+                <p-sortIcon field="cantidad" />
+            </th>
+            <th style="min-width:10rem">
+                Unidad medida
+                <p-sortIcon field="unidadMedida" />
+            </th>
+            <th style="min-width:10rem">
+                Precio
+                <p-sortIcon field="precio" />
+            </th>
+            <th style="min-width:10rem">
+                Categoria
+                <p-sortIcon field="categoriaId" />
+            </th>
+            <th>Operaciones</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-item>
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>{{ item.unidadMedida }}</td>
+            <td>{{ item.precio }}</td>
+            <td>{{ item.categoriaId }}</td>
+            <td>
+                <p-button icon="pi pi-pencil" class="mr-2" [rounded]="true" [outlined]="true" pTooltip="Editar" (click)="editar(item)"/>
+                <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" pTooltip="Eliminar" (click)="eliminarDialog(item.id)"/>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="itemDialog" [style]="{ width: '450px' }" [header]="accion + ' item'" [modal]="true">
+    <ng-template #content>
+        <form [formGroup] = "formulario">
+            <div class="flex ">
+                <div class="card flex flex-col gap-2">
+                    <p-iftalabel>
+                        <input pInputText formControlName="nombre">
+                        <label for="nombre">Nombre</label>
+                    </p-iftalabel>
+                    <p-iftalabel>
+                        <p-input-number [showButtons]="true" formControlName="cantidad" />
+                        <label for="cantidad">Cantidad</label>
+                    </p-iftalabel>
+                    <p-iftalabel>
+                        <p-select [options]="unidadMedidaOptions" formControlName="unidadMedida" class="w-full md:w-56"/>
+                        <label for="unidadMedida">Unidad de Medida</label>
+                    </p-iftalabel>
+                    <p-iftalabel>
+                        <p-input-number formControlName="precio" mode="currency" inputId="currency" currencyDisplay="symbol" currency="BOB" locale="es-BO"/>
+                        <label for="precio">Precio</label>
+                    </p-iftalabel>
+                    <p-iftalabel>
+                        <p-select [options]="categorias" optionLabel="descripcion" optionValue="id" class="w-full md:w-56" formControlName="categoriaId"/>
+                        <label for="categoriaId">Categoria</label>
+                    </p-iftalabel>
+                </div>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #footer>
+        <p-button label="Cancelar" icon="pi pi-times" (click)="cancelar()"/>
+        <p-button label="Guardar" icon="pi pi-check" (click)="guardar()" />
+    </ng-template>
+</p-dialog>
+<p-confirmdialog [style]="{ width: '450px' }" />
