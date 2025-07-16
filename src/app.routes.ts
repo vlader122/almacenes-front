@@ -4,6 +4,7 @@ import { Notfound } from './app/pages/notfound/notfound';
 import { PersonalComponent } from './app/pages/personal/personal.component';
 import { CategoriaComponent } from './app/pages/categoria/categoria.component';
 import { ItemComponent } from './app/pages/item/item.component';
+import { EntregaComponent } from './app/pages/entrega/entrega.component';
 
 export const appRoutes: Routes = [
     {
@@ -14,6 +15,7 @@ export const appRoutes: Routes = [
             { path: 'personal', component: PersonalComponent },
             { path: 'categoria', component: CategoriaComponent },
             { path: 'item', component: ItemComponent },
+            { path: 'entrega', component: EntregaComponent },
         ]
     },
     { path: 'notfound', component: Notfound },

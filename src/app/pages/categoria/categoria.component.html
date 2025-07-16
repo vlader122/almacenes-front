@@ -49,6 +49,16 @@
                         <input pInputText formControlName="descripcion">
                         <label for="descripcion">Descripcion</label>
                     </p-iftalabel>
+                    @if (formulario.get('descripcion')?.touched && formulario.get('descripcion')?.invalid) {
+                    <div>
+                        @if (formulario.get('descripcion')?.errors?.['required']) {
+                        <small>La descripción es obligatoria.</small>
+                        }
+                        @if (formulario.get('descripcion')?.errors?.['minlength']) {
+                        <small>Debe tener al menos 3 caracteres.</small>
+                        }
+                    </div>
+                    }
                 </div>
             </div>
         </form>

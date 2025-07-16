@@ -12,7 +12,7 @@ export class PersonalService {
   constructor( private _httpClient:HttpClient ) { }
 
   obtenerPersonal(): Observable<any>{
-    const getRuta = this.ruta + "?numeroPagina=1&tama%C3%B1oPagina=10&pag=false";
+    const getRuta = this.ruta + "?numeroPagina=1&tama%C3%B1oPagina=10&pag=false&withDto=true";
     return this._httpClient.get<Personal>(getRuta);
   }
 
